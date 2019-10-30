@@ -17,33 +17,34 @@ class node:
 
     #Verificar o lado atual se negativo lado 1 se positivo lado 2
     if (not currentSide):
-
       #Embarcar um Canibal e um Missionario 
-      if (self.side1[0] - 1 >= self.side1[1] - 1 and self.side1[0] - 1 >= 0 and self.side1[1] - 1 >= 0):
-        newNode = createNode(self.side1[0]-1,self.side1[1]-1,1,1,self.side2[0],self.side2[1])
+      if (self.side1[0] - 1 >= (self.side1[1] - 1) and self.side1[0] - 1 >= 0 and self.side1[1] - 1 >= 0):
+        newNode = self.createNode(self.side1[0]-1,self.side1[1]-1,1,1,self.side2[0],self.side2[1])
         self.sons.append(newNode)
+        print(self.side1[1])
       #Mandar somente um canibal
-      elif (self.side1[1] - 1 >= 0 and self.side1[1] - 1 >= self.side1[0]):
-        newNode = createNode(self.side1[0],self.side1[1]-1,0,1,self.side2[0],self.side2[1])
+      if (self.side1[1] - 1 >= 0 and self.side1[1] - 1 >= self.side1[0]):
+        print("CHE")
+        newNode = self.createNode(self.side1[0],self.side1[1]-1,0,1,self.side2[0],self.side2[1])
         self.sons.append(newNode)
       #Mandar dois canibais 
-      elif (self.side1[1] - 2 >= 0 and self.side1[1] - 2 >= self.side1[0]):
-        newNode = createNode(self.side1[0],self.side1[1]-2,0,2,self.side2[0],self.side2[1])
+      if (self.side1[1] - 2 >= 0 and self.side1[1] - 2 >= self.side1[0]):
+        newNode = self.createNode(self.side1[0],self.side1[1]-2,0,2,self.side2[0],self.side2[1])
         self.sons.append(newNode)
 
     else:
 
       #Embarcar um Canibal e um Missionario 
       if (self.side2[0] - 1 >= self.side2[1] - 1 and self.side2[0] - 1 >= 0 and self.side2[1] - 1 >= 0):
-        newNode = createNode(self.side1[0],self.side1[1],1,1,self.side2[0]-1,self.side2[1]-1)
+        newNode = self.createNode(self.side1[0],self.side1[1],1,1,self.side2[0]-1,self.side2[1]-1)
         self.sons.append(newNode)
       #Mandar somente um canibal
-      elif (self.side2[1] - 1 >= 0 and self.side2[1] - 1 >= self.side2[0]):
-        newNode = createNode(self.side1[0],self.side1[1],0,1,self.side2[0],self.side2[1]-1)
+      if (self.side2[1] - 1 >= 0 and self.side2[1] - 1 >= self.side2[0]):
+        newNode = self.createNode(self.side1[0],self.side1[1],0,1,self.side2[0],self.side2[1]-1)
         self.sons.append(newNode)
       #Mandar dois canibais 
-      elif (self.side2[1] - 2 >= 0 and self.side2[1] - 2 >= self.side2[0]):
-        newNode = createNode(self.side1[0],self.side1[1],0,2,self.side2[0],self.side2[1]-2)
+      if (self.side2[1] - 2 >= 0 and self.side2[1] - 2 >= self.side2[0]):
+        newNode = self.createNode(self.side1[0],self.side1[1],0,2,self.side2[0],self.side2[1]-2)
         self.sons.append(newNode)
 
 
@@ -57,23 +58,23 @@ class node:
         #Verificar se é possível descer
         if (self.side2[0] + 1 >= self.side2[1] + 1):
 
-          newNode = createNode(self.side1[0],self.side1[1],0,0,self.side2[0]+1, self.side2[1]+1)
+          newNode = self.createNode(self.side1[0],self.side1[1],0,0,self.side2[0]+1, self.side2[1]+1)
           self.sons.append(newNode)
 
       #Chegando apenas um canibal
-      elif (self.boat[0] == 0 and self.boat[1] == 1):
+      if (self.boat[0] == 0 and self.boat[1] == 1):
         
         #Verificar se é possível a descida do canibal
         if (self.side2[1] + 1 >= self.side2[0]):
-          newNode = createNode(self.side1[0],self.side1[1],0,0,self.side2[0], self.side2[1]+1)
+          newNode = self.createNode(self.side1[0],self.side1[1],0,0,self.side2[0], self.side2[1]+1)
           self.sons.append(newNode)
 
       #Chegando dois canibais
-      elif (self.boat[0] == 0 and self.boat[1] == 2):
+      if (self.boat[0] == 0 and self.boat[1] == 2):
 
         #Verificar se é possível a descida dos dois canibais
         if (self.side2[1] + 2 >= self.side2[0]):
-          newNode = createNode(self.side1[0],self.side1[1],0,0,self.side2[0], self.side2[1]+2)
+          newNode = self.createNode(self.side1[0],self.side1[1],0,0,self.side2[0], self.side2[1]+2)
           self.sons.append(newNode)
 
     else:
@@ -84,38 +85,33 @@ class node:
         #Verificar se é possível descer
         if (self.side1[0] + 1 >= self.side1[1] + 1):
 
-          newNode = createNode(self.side1[0]+1,self.side1[1]+1,0,0,self.side2[0], self.side2[1])
+          newNode = self.createNode(self.side1[0]+1,self.side1[1]+1,0,0,self.side2[0], self.side2[1])
           self.sons.append(newNode)
 
       #Chegando apenas um canibal
-      elif (self.boat[0] == 0 and self.boat[1] == 1):
+      if (self.boat[0] == 0 and self.boat[1] == 1):
         
         #Verificar se é possível a descida do canibal
         if (self.side1[1] + 1 >= self.side1[0]):
-          newNode = createNode(self.side1[0],self.side1[1]+1,0,0,self.side2[0], self.side2[1])
+          newNode = self.createNode(self.side1[0],self.side1[1]+1,0,0,self.side2[0], self.side2[1])
           self.sons.append(newNode)
 
       #Chegando dois canibais
-      elif (self.boat[0] == 0 and self.boat[1] == 2):
+      if (self.boat[0] == 0 and self.boat[1] == 2):
 
         #Verificar se é possível a descida dos dois canibais
         if (self.side1[1] + 2 >= self.side1[0]):
-          newNode = createNode(self.side1[0],self.side1[1]+2,0,0,self.side2[0], self.side2[1])
+          newNode = self.createNode(self.side1[0],self.side1[1]+2,0,0,self.side2[0], self.side2[1])
           self.sons.append(newNode)
-
-    
-
-    
-
-
-  
-    
 
 root = node()
 root.createNode(3,3,0,0,0,0)
-newNode = createNode(2,2,1,1,0,0)
-root.sons.append(newNode)
-newNode = createNode(2,2,0,1,0,0)
-root.sons.append(newNode)
-newNode = createNode(2,2,0,2,0,0)
-root.sons.append(newNode)
+root.boarding(False)
+#newNode = root.createNode(2,2,1,1,0,0)
+#root.sons.append(newNode)
+#newNode = createNode(2,2,0,1,0,0)
+#root.sons.append(newNode)
+#newNode = createNode(2,2,0,2,0,0)
+#root.sons.append(newNode)
+for i in root.sons:
+  print ("AQU")
