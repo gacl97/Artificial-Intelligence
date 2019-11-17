@@ -69,7 +69,7 @@ class graph:
             i.saveCost(currentDist)
             queue.put([currentDist,i.id,begin,count])
             count += 1
-        # print()
+            
         while(not queue.empty()):
             currentNode = queue.get()
             visited[currentNode[1]] = 1
