@@ -72,8 +72,15 @@ class Tree():
                     flag = False
             if(flag):
                 return True
-        return False
-    
+        count = 0
+        for i in range(3):
+            for j in range(3):
+                if(currentNode.table[i][j] == -1):
+                    count += 1
+        if(count > 0):
+            return False
+        else:
+            return True
     def exception(self, currentNode):
         while True:
             try:
@@ -151,9 +158,9 @@ class Tree():
                     if (state.table[i][j] != -1):
                         count += 1
             if(flag):
+                points = 0
                 break
             points += self.totalPoints(count)
-
         flag = False
         for i in range(3):
             count = 0
@@ -168,6 +175,7 @@ class Tree():
                     if (state.table[i][j] != -1):
                         count += 1
             if(flag):
+                points = 0
                 break
             points += self.totalPoints(count)
         return points
@@ -181,6 +189,8 @@ class Tree():
             self.printTable(playerNode.table)
             print("--- Player 2 ---")
             print()
+            if(self.checkVictory(currentNode,1) or self.checkVictory(currentNode,0)):
+                break
             AiNode = self.generateStates(playerNode)
             self.printTable(AiNode.table)
             currentNode = AiNode
