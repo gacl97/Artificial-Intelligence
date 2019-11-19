@@ -22,14 +22,12 @@ class Tree():
             for j in range(3):
                 item = self.icon(table[i][j])
                 if(j == 2):
-
                     print(" ",item)
                     break
                 if(j == 1):
                     print(" ",item, " |", end="")
                     continue
                 print(i," ",item, " |", end="")
-
             if(i == 2):
                 break
             print("  -----|-----|-----")
@@ -38,59 +36,59 @@ class Tree():
     def checkVictory(self, currentNode, item):
         # Verificar linha sendo item o valor que quer verificar
         for i in range(3):
-            flag = True
+            count = 0
             for j in range(3):
-                if(currentNode.table[i][j] != item):
-                    flag = False
-            if(flag):
-                return True
+                # Se possuir uma linha inteira completa
+                if(currentNode.table[i][j] == item):
+                    count += 1
+            if(count == 3):
+                return False
         #Verificar diagonal 1
-        flag = True
+        count = 0
         for i in range(3):
             for j in range(3):
                 if(i + j == 2):
-                    if(currentNode.table[i][j] != item):
-                        flag = False
-                        break
-        if(flag):
-            return True
-        flag = True
+                    if(currentNode.table[i][j] == item):
+                        count += 1
+        if(count == 3):
+            return False
         # Diagonal 2
+        count = 0
         for i in range(3):
             for j in range(3):
                 if(i == j):
-                    if(currentNode.table[i][j] != item):
-                        flag = False
-                        break
-        if(flag):
-            return True
+                    if(currentNode.table[i][j] == item):
+                        count += 1
+        if(count == 3):
+            return False
         # Coluna
         for i in range(3):
-            flag = True
+            count = 0
             for j in range(3):
-                if (currentNode.table[j][i] != item):
-                    flag = False
-            if(flag):
-                return True
+                if (currentNode.table[j][i] == item):
+                    count += 1
+            if(count == 3):
+                return False
         count = 0
         for i in range(3):
             for j in range(3):
                 if(currentNode.table[i][j] == -1):
                     count += 1
         if(count > 0):
-            return False
-        else:
             return True
+        else:
+            return False
+
     def exception(self, currentNode):
         while True:
             try:
                 print("Your turn: ")
                 print()
-                print("Choose row index from [0-2]")
-                x = int(input())
-                print("Choose column index from [0-2]")
-                y = int(input())
-
+                print("Choose row and column index from [0-2]")
+                x,y = input().split()
+                x = int(x)
+                y = int(y)
+                # Validar posições e retornar um estado caso válido
                 if (x >= 0 and x <= 2 and y >= 0 and y <= 2 and currentNode.table[x][y] == -1):
                     return self.createNode(x,y,currentNode.table,0)
             except:
@@ -124,7 +122,6 @@ class Tree():
         return points
 
     def validateColumn(self, state, item):
-
         # Colunas
         points = 0
         for i in range(3):
@@ -137,7 +134,6 @@ class Tree():
                 # Se não for espaço vazio é o item certo
                 if (state.table[j][i] != -1):
                     count += 1
-            
             points += self.totalPoints(count)
         return points
     
@@ -180,22 +176,6 @@ class Tree():
             points += self.totalPoints(count)
         return points
 
-    def generateNode(self, currentNode):
-
-        while((not self.checkVictory(currentNode,1) or self.checkVictory(currentNode,0))):
-            playerNode = self.exception(currentNode)
-            print("--- PLAYER 1 ---")
-            print()
-            self.printTable(playerNode.table)
-            print("--- Player 2 ---")
-            print()
-            if(self.checkVictory(currentNode,1) or self.checkVictory(currentNode,0)):
-                break
-            AiNode = self.generateStates(playerNode)
-            self.printTable(AiNode.table)
-            currentNode = AiNode
-            print()
-
     def generateStates(self, currentNode):
 
         states = []
@@ -214,9 +194,46 @@ class Tree():
 
         betterPoints = -1
         betterNode = ""
-        for i in states:
-            
+        for i in states:            
             if(i[1] > betterPoints):
                 betterPoints = i[1]
                 betterNode = i[0]
         return betterNode
+
+
+
+    def winner(self, player1, player2):
+        if (not(player1) and not(player2)):
+            print("EMPATE")
+            return
+        if(player1):
+            print("PlAYER 1 WIN!!!")
+        elif(player2):
+            print("PLAYER 2 WIN!!!")
+
+    def generateNode(self, currentNode):
+        
+        while True:
+            flag1 = self.checkVictory(currentNode,1)
+            flag2 = self.checkVictory(currentNode,0)
+            if (not(flag1 and flag2)):
+                self.winner(flag1,flag2)
+                break
+            player2Node = self.exception(currentNode)
+            print("--- PLAYER 1 ---")
+            print()
+            self.printTable(player2Node.table)
+            # Verificar se já possui um ganhador
+            flag1 = self.checkVictory(currentNode,1)
+            flag2 = self.checkVictory(currentNode,0)
+            if(not(flag1) or not(flag2)):
+                self.winner(flag1,flag2)
+                break
+            print("--------------------")
+            print()
+            print("--- Player 2 ---")
+            print()
+            player2Node = self.generateStates(player2Node)
+            self.printTable(player2Node.table)
+            currentNode = player2Node
+            print()
