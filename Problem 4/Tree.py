@@ -85,9 +85,7 @@ class Tree():
                 print("Your turn: ")
                 print()
                 print("Choose row and column index from [0-2]")
-                x,y = input().split()
-                x = int(x)
-                y = int(y)
+                x,y = map(int,input().split())
                 # Validar posições e retornar um estado caso válido
                 if (x >= 0 and x <= 2 and y >= 0 and y <= 2 and currentNode.table[x][y] == -1):
                     return self.createNode(x,y,currentNode.table,0)
