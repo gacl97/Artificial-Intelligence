@@ -47,7 +47,7 @@ class Graph:
         best_path = []
         best_cost = 99999999
 
-        for i in range(600000):
+        for i in range(1000000):
             x = random.randint(1,9)
             y = random.randint(1,9)
             new_hamiltonian_path[x],new_hamiltonian_path[y] = new_hamiltonian_path[y],new_hamiltonian_path[x]
