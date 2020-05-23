@@ -1,2 +1,2 @@
 # Artificial-Intelligence
-Projetos de inteligência artificial
+Artificial intelligence projects
